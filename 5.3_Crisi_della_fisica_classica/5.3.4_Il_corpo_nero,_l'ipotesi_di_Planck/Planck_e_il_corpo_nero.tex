@@ -1,0 +1,883 @@
+\documentclass[11pt]{article}
+
+    \usepackage[breakable]{tcolorbox}
+    \usepackage{parskip} % Stop auto-indenting (to mimic markdown behaviour)
+    
+    \usepackage{iftex}
+    \ifPDFTeX
+    	\usepackage[T1]{fontenc}
+    	\usepackage{mathpazo}
+    \else
+    	\usepackage{fontspec}
+    \fi
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % Maintain compatibility with old templates. Remove in nbconvert 6.0
+    \let\Oldincludegraphics\includegraphics
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionFormat{nocaption}{}
+    \captionsetup{format=nocaption,aboveskip=0pt,belowskip=0pt}
+
+    \usepackage[Export]{adjustbox} % Used to constrain images to a maximum size
+    \adjustboxset{max size={0.9\linewidth}{0.9\paperheight}}
+    \usepackage{float}
+    \floatplacement{figure}{H} % forces figures to be placed at the correct location
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range
+    \makeatletter % fix for grffile with XeLaTeX
+    \def\Gread@@xetex#1{%
+      \IfFileExists{"\Gin@base".bb}%
+      {\Gread@eps{\Gin@base.bb}}%
+      {\Gread@@xetex@aux#1}%
+    }
+    \makeatother
+
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    % The default LaTeX title has an obnoxious amount of whitespace. By default,
+    % titling removes some of it. It also provides customization options.
+    \usepackage{titling}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    \usepackage{mathrsfs}
+    
+
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+    \definecolor{ansi-default-inverse-fg}{HTML}{FFFFFF}
+    \definecolor{ansi-default-inverse-bg}{HTML}{000000}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatibility definitions
+    \def\gt{>}
+    \def\lt{<}
+    \let\Oldtex\TeX
+    \let\Oldlatex\LaTeX
+    \renewcommand{\TeX}{\textrm{\Oldtex}}
+    \renewcommand{\LaTeX}{\textrm{\Oldlatex}}
+    % Document parameters
+    % Document title
+    \title{Planck\_e\_il\_corpo\_nero}
+    
+    
+    
+    
+    
+% Pygments definitions
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % For linebreaks inside Verbatim environment from package fancyvrb. 
+    \makeatletter
+        \newbox\Wrappedcontinuationbox 
+        \newbox\Wrappedvisiblespacebox 
+        \newcommand*\Wrappedvisiblespace {\textcolor{red}{\textvisiblespace}} 
+        \newcommand*\Wrappedcontinuationsymbol {\textcolor{red}{\llap{\tiny$\m@th\hookrightarrow$}}} 
+        \newcommand*\Wrappedcontinuationindent {3ex } 
+        \newcommand*\Wrappedafterbreak {\kern\Wrappedcontinuationindent\copy\Wrappedcontinuationbox} 
+        % Take advantage of the already applied Pygments mark-up to insert 
+        % potential linebreaks for TeX processing. 
+        %        {, <, #, %, $, ' and ": go to next line. 
+        %        _, }, ^, &, >, - and ~: stay at end of broken line. 
+        % Use of \textquotesingle for straight quote. 
+        \newcommand*\Wrappedbreaksatspecials {% 
+            \def\PYGZus{\discretionary{\char`\_}{\Wrappedafterbreak}{\char`\_}}% 
+            \def\PYGZob{\discretionary{}{\Wrappedafterbreak\char`\{}{\char`\{}}% 
+            \def\PYGZcb{\discretionary{\char`\}}{\Wrappedafterbreak}{\char`\}}}% 
+            \def\PYGZca{\discretionary{\char`\^}{\Wrappedafterbreak}{\char`\^}}% 
+            \def\PYGZam{\discretionary{\char`\&}{\Wrappedafterbreak}{\char`\&}}% 
+            \def\PYGZlt{\discretionary{}{\Wrappedafterbreak\char`\<}{\char`\<}}% 
+            \def\PYGZgt{\discretionary{\char`\>}{\Wrappedafterbreak}{\char`\>}}% 
+            \def\PYGZsh{\discretionary{}{\Wrappedafterbreak\char`\#}{\char`\#}}% 
+            \def\PYGZpc{\discretionary{}{\Wrappedafterbreak\char`\%}{\char`\%}}% 
+            \def\PYGZdl{\discretionary{}{\Wrappedafterbreak\char`\$}{\char`\$}}% 
+            \def\PYGZhy{\discretionary{\char`\-}{\Wrappedafterbreak}{\char`\-}}% 
+            \def\PYGZsq{\discretionary{}{\Wrappedafterbreak\textquotesingle}{\textquotesingle}}% 
+            \def\PYGZdq{\discretionary{}{\Wrappedafterbreak\char`\"}{\char`\"}}% 
+            \def\PYGZti{\discretionary{\char`\~}{\Wrappedafterbreak}{\char`\~}}% 
+        } 
+        % Some characters . , ; ? ! / are not pygmentized. 
+        % This macro makes them "active" and they will insert potential linebreaks 
+        \newcommand*\Wrappedbreaksatpunct {% 
+            \lccode`\~`\.\lowercase{\def~}{\discretionary{\hbox{\char`\.}}{\Wrappedafterbreak}{\hbox{\char`\.}}}% 
+            \lccode`\~`\,\lowercase{\def~}{\discretionary{\hbox{\char`\,}}{\Wrappedafterbreak}{\hbox{\char`\,}}}% 
+            \lccode`\~`\;\lowercase{\def~}{\discretionary{\hbox{\char`\;}}{\Wrappedafterbreak}{\hbox{\char`\;}}}% 
+            \lccode`\~`\:\lowercase{\def~}{\discretionary{\hbox{\char`\:}}{\Wrappedafterbreak}{\hbox{\char`\:}}}% 
+            \lccode`\~`\?\lowercase{\def~}{\discretionary{\hbox{\char`\?}}{\Wrappedafterbreak}{\hbox{\char`\?}}}% 
+            \lccode`\~`\!\lowercase{\def~}{\discretionary{\hbox{\char`\!}}{\Wrappedafterbreak}{\hbox{\char`\!}}}% 
+            \lccode`\~`\/\lowercase{\def~}{\discretionary{\hbox{\char`\/}}{\Wrappedafterbreak}{\hbox{\char`\/}}}% 
+            \catcode`\.\active
+            \catcode`\,\active 
+            \catcode`\;\active
+            \catcode`\:\active
+            \catcode`\?\active
+            \catcode`\!\active
+            \catcode`\/\active 
+            \lccode`\~`\~ 	
+        }
+    \makeatother
+
+    \let\OriginalVerbatim=\Verbatim
+    \makeatletter
+    \renewcommand{\Verbatim}[1][1]{%
+        %\parskip\z@skip
+        \sbox\Wrappedcontinuationbox {\Wrappedcontinuationsymbol}%
+        \sbox\Wrappedvisiblespacebox {\FV@SetupFont\Wrappedvisiblespace}%
+        \def\FancyVerbFormatLine ##1{\hsize\linewidth
+            \vtop{\raggedright\hyphenpenalty\z@\exhyphenpenalty\z@
+                \doublehyphendemerits\z@\finalhyphendemerits\z@
+                \strut ##1\strut}%
+        }%
+        % If the linebreak is at a space, the latter will be displayed as visible
+        % space at end of first line, and a continuation symbol starts next line.
+        % Stretch/shrink are however usually zero for typewriter font.
+        \def\FV@Space {%
+            \nobreak\hskip\z@ plus\fontdimen3\font minus\fontdimen4\font
+            \discretionary{\copy\Wrappedvisiblespacebox}{\Wrappedafterbreak}
+            {\kern\fontdimen2\font}%
+        }%
+        
+        % Allow breaks at special characters using \PYG... macros.
+        \Wrappedbreaksatspecials
+        % Breaks at punctuation characters . , ; ? ! and / need catcode=\active 	
+        \OriginalVerbatim[#1,codes*=\Wrappedbreaksatpunct]%
+    }
+    \makeatother
+
+    % Exact colors from NB
+    \definecolor{incolor}{HTML}{303F9F}
+    \definecolor{outcolor}{HTML}{D84315}
+    \definecolor{cellborder}{HTML}{CFCFCF}
+    \definecolor{cellbackground}{HTML}{F7F7F7}
+    
+    % prompt
+    \makeatletter
+    \newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
+    \makeatother
+    \newcommand{\prompt}[4]{
+        \ttfamily\llap{{\color{#2}[#3]:\hspace{3pt}#4}}\vspace{-\baselineskip}
+    }
+    
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+\begin{document}
+    
+    \maketitle
+    
+    
+
+    
+    Table of Contents{}
+
+{{1~~}Introduzione al problema del corpo nero }
+
+{{1.1~~}Un po' di storia.. }
+
+{{1.2~~}Kirchhoff }
+
+{{1.3~~}legge di Rayleigh-Jeans }
+
+{{1.3.0.1~~}La legge di Wien}
+
+{{1.3.0.2~~}Legge di stefan-Boltzmann}
+
+{{2~~}Dimostrazione della formula di Planck}
+
+{{2.1~~}Ipotesi}
+
+{{2.1.1~~}Ipotesi di quantizzazione - Planck}
+
+{{2.1.2~~}Fattore di Boltzmann}
+
+{{2.1.2.1~~}\(h\nu \ll k_BT\)}
+
+{{2.1.2.2~~}\(h\nu=k_BT\)}
+
+{{2.1.2.3~~}\(h\nu \gt k_BT\)}
+
+{{2.2~~}L'equilibrio termodinamico ed energia del corpo nero}
+
+{{2.2.1~~}Studiamo il denominatore}
+
+{{2.2.2~~}Studiamo il numeraore}
+
+{{2.3~~}L'energia media e la distribuzione di Planck}
+
+{{2.4~~}la densità di energia - distribuzione di Planck}
+
+{{3~~}Conseguenze della formula di Planck}
+
+{{3.1~~}La legge di Wien}
+
+{{3.2~~}La legge di Stefan}
+
+{{3.3~~}La legge di Rayleigh-Jeans}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{1}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+\PY{k+kn}{import} \PY{n+nn}{matplotlib}
+\PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+\PY{k+kn}{from} \PY{n+nn}{IPython}\PY{n+nn}{.}\PY{n+nn}{display} \PY{k+kn}{import} \PY{n}{Image}
+\PY{k+kn}{from} \PY{n+nn}{IPython}\PY{n+nn}{.}\PY{n+nn}{display} \PY{k+kn}{import} \PY{n}{IFrame}
+\PY{k+kn}{from} \PY{n+nn}{scipy}\PY{n+nn}{.}\PY{n+nn}{constants} \PY{k+kn}{import} \PY{n}{h}\PY{p}{,} \PY{n}{c}\PY{p}{,} \PY{n}{k}\PY{p}{,} \PY{n}{pi}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \hypertarget{la-legge-di-planck}{%
+\section{La legge di Planck}\label{la-legge-di-planck}}
+
+\[
+u(\nu,T)= \frac{8\pi \nu^2}{c^3}  \frac{h\nu}{e^{\frac{h\nu}{kT}}-1}
+\]
+
+    \hypertarget{introduzione-al-problema-del-corpo-nero}{%
+\subsection{Introduzione al problema del corpo nero
+}\label{introduzione-al-problema-del-corpo-nero}}
+
+\hypertarget{un-po-di-storia..}{%
+\subsubsection{Un po' di storia.. }\label{un-po-di-storia..}}
+
+Tutti noi abbiamo esperienza del fatto che una brace gialla in un camino
+ardente \((1400-1600\, °C)\) risulta più calda di una brace rossa di un
+camino in via di spegnimento \((1200-1300\, °C)\). All'aumentare della
+temperatura, il colore della luce emessa si sposta dal rosso verso il
+blu. La correlazione tra il colore della radiazione termica emessa e la
+temperatura di oggetti incandescenti, incuriosì l'astronomo
+anglo-tedesco William Herschel che, già nel 1800 (prima dell'insorgere
+delle necessità industriali di cui si è appena parlato), effettuò una
+scoperta sorprendente. Facendo passare la luce del Sole attraverso un
+prisma e, facendo in modo che ognuno dei colori in cui veniva scomposta
+la luce andasse a colpire uno solo dei diversi termometri disposti su di
+un banco, si accorse che i termometri non indicavano tutti la stessa
+temperatura. Si tratta della prima evidenza del fatto che l'intensità
+della radiazione che proviene dal Sole è diversa per ognuna delle
+lunghezze d'onda incidenti. In particolare, la \textbf{distribuzione
+spettrale della radiazione emessa dal Sole, assomiglia moltissimo a
+quella del già citato corpo nero.}
+
+In realtà, ogni corpo che non si trovi in equilibrio termico con
+l'ambiente che lo circonda, emette radiazione in forma di comune calore.
+Il fenomeno è riconducibile all'oscillazione delle cariche del corpo
+stesso che, in accordo con la teoria di Maxwell (e le osservazioni di
+Hertz) muovendosi emettono radiazione, rallentando. In questo modo il
+corpo si raffredda.
+
+\hypertarget{kirchhoff}{%
+\subsubsection{Kirchhoff }\label{kirchhoff}}
+
+Planck riconoscerà l'importanza del modello di Kirchhoff per lo sviluppo
+della sua teoria, affermando: \emph{Kirchhoff ha dimostrato che lo
+stato della radiazione termica all'interno di una cavità delimitata da
+una sostanza, di qualsiasi natura, che la assorbe e la emette, a una
+temperatura uniforme, è totalmente indipendente dalla natura della
+sostanza stessa. È stata così dimostrata l'esistenza di una funzione
+universale che dipende solo dalla temperatura e dalla lunghezza d'onda
+(come dalla frequenza), ma in nessun modo dalle proprietà di alcuna
+sostanza. La scoperta di tale funzione straordinaria prometteva una
+comprensione più profonda della relazione tra energia e temperatura che
+è di fatto,  il problema più importante della termodinamica e, di conseguenza, di tutta la fisica molecolare.}
+
+\hypertarget{legge-di-rayleigh-jeans}{%
+\subsubsection{legge di Rayleigh-Jeans }\label{legge-di-rayleigh-jeans}}
+
+Lord Rayleigh vuole ricavare la funzione che descrive l'energia per
+unità di volume e di lunghezza d'onda che viene emessa all'interno del
+corpo nero posto ad una temperatura \(T\). Ossia vuole ricavare \[
+I(\lambda,T)
+\] Sapendo che valgono le leggi di Wien e di Stefan-Boltzmann
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{la-legge-di-wien}{%
+\subparagraph{La legge di Wien}\label{la-legge-di-wien}}
+
+La legge dello spostamento di Wien è: \[
+\lambda_{max}T=b; \quad b\,\text{è una costante misurata empiricamente, detta costante di Wien}\\
+b=2,898\cdot 10^{-3}\, m\cdot K
+\] \#\#\#\#\# Legge di stefan-Boltzmann La potenza per unità di area
+totale irraggiata da un corpo che si trova ad una data temperatura è: \[
+I_{tot}(T)=\sigma\cdot T^4; \quad \sigma=5.67\cdot10^{-8}\, \frac{W}{m^2K^4}
+\]
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+Si tratta, comunque, di un approccio di tipo classico, basato sulla
+possibilità di \textbf{assorbire ed emettere radiazione in cavità (ad
+ogni lunghezza d'onda) , solo per mezzo di onde elettromagnetiche
+stazionarie.}
+
+Per onda stazionaria s'intende un'onda che non si propaga lungo una
+fissata direzione spaziale, ma oscilla soltanto nel tempo. Essa
+presenterà dunque dei punti in cui è fissa e di ampiezza nulla, detti
+nodi.
+
+Nel modello di Rayleigh: 1. i nodi delle onde stazionarie si trovano
+sempre sulle pareti della cavità 2. ogni trasmissione di energia
+all'interno della cavità è vincolato ad avvenire per mezzo di un onda
+stazionaria.
+
+Su questa base, egli associò ogni onda a un oscillatore armonico
+unidimensionale (l'oscillazione armonica è legata all'oscillazione del
+campo elettrico). In questo modo, la densità spettrale d'energia
+\(u_\nu(T)\), ovvero l'energia per unità di volume in un intervallo
+infinitesimo di lunghezza d'onda, sarà ottenuta come prodotto tra la
+densità di volume \(n_\lambda\) dei modi di lunghezza d'onda compresa
+tra \(\lambda\) e \(\lambda+d\lambda\) e l'energia media
+\(<\epsilon_\lambda>\) di un oscillatore, ovvero: \[
+\rho=n_\lambda<\epsilon_\lambda>.
+\]
+
+Utilizzando il principio di equipartizione e l'ipotesi di un campo
+elettromagnetico formato da onde stazionari Raylegh arriva alla
+conclusione che La densità di energia \(u_\nu\) per unità di intervallo
+di frequenza a una frequenza \(\nu\) è, secondo The Rayleigh-Jeans
+Radiation,
+
+\[
+u_\nu(T) = \frac{8\pi}{c^2}\nu^2k_bT
+\]
+
+Per un dimostrazione
+\href{https://github.com/massimobosetti/Physics-Problem/blob/master/5_anno/5.3\%20Crisi\%20della\%20fisica\%20classica/5.3.6.2\%20Derivazione\%20della\%20legge\%20di\%20Rayleigh-Jeans.ipynb}{legge
+di Rayleigh-Jeans}
+
+Che porta al problema della catastrofe ultravioletta e la mancanza di
+accordo con i dati sperimentali a frequenze elvate.
+
+    \hypertarget{dimostrazione-della-formula-di-planck}{%
+\subsection{Dimostrazione della formula di
+Planck}\label{dimostrazione-della-formula-di-planck}}
+
+\hypertarget{ipotesi}{%
+\subsubsection{Ipotesi}\label{ipotesi}}
+
+\hypertarget{ipotesi-di-quantizzazione---planck}{%
+\paragraph{Ipotesi di quantizzazione -
+Planck}\label{ipotesi-di-quantizzazione---planck}}
+
+L'energia del campo magnetico all'interno della cavità, all'equilibrio,
+non può prendere qualsiasi valore, ma può assumere solo multipli interi
+di una energia \emph{discretizzata}, un \textbf{quanto di energia} che
+dipende dalla frequenza e da una costante, cioè:
+
+\[
+\label{eq:planck}
+E_n=n\,h\nu \quad\qquad (n=0,1,2,\cdots)\,\in \mathbb{N}
+\]
+
+    \hypertarget{fattore-di-boltzmann}{%
+\paragraph{Fattore di Boltzmann}\label{fattore-di-boltzmann}}
+
+Le energie vanno ``pesate'' con un fattore. Non tutte le energia hanno
+lo stesso peso. Anzi andando ad energie elevate, ovvero frequenze
+elevate, queste debbono necessariamente essere meno probabile. Il
+fattore che media è il fattore di Boltzmann \[
+f(E_n)=e^{-\frac{E_n}{k_BT}}
+\]
+
+come ben si può vedere dal grafico, questo fattore va a pesare in modo
+differente energie diverse e fornisce la probaibilità che in uno sistema
+ad una temperatura \(T\) ci sia un oscillatore, o un modo del campo
+elettromagnetico, con energia \(h\nu\).
+
+    \hypertarget{hnu-ll-k_bt}{%
+\subparagraph{\texorpdfstring{\(h\nu \ll k_BT\)}{h\textbackslash{}nu \textbackslash{}ll k\_BT}}\label{hnu-ll-k_bt}}
+
+Per capire il grafico fissiamo una temperatura \(T\) e pensiamo a 3
+regimi diversi:
+
+Abbiamo quindi una suddivisione delle energie in molti intervalli
+piccoli
+
+    \hypertarget{hnuk_bt}{%
+\subparagraph{\texorpdfstring{\(h\nu=k_BT\)}{h\textbackslash{}nu=k\_BT}}\label{hnuk_bt}}
+
+Come si può notare se andiamo ad una energia per cui \(k_BT=h\nu\)
+allora il fattore si
+
+    \hypertarget{hnu-gt-k_bt}{%
+\subparagraph{\texorpdfstring{\(h\nu \gt k_BT\)}{h\textbackslash{}nu \textbackslash{}gt k\_BT}}\label{hnu-gt-k_bt}}
+
+    \hypertarget{lequilibrio-termodinamico-ed-energia-del-corpo-nero}{%
+\subsubsection{L'equilibrio termodinamico ed energia del corpo
+nero}\label{lequilibrio-termodinamico-ed-energia-del-corpo-nero}}
+
+All'equilibrio termodinamico vogliamo conoscere l'energia media \(<E>\),
+quindi:
+
+L'energia media è data da:
+
+\begin{equation}\label{eq:ener_media}
+<E> = \frac{\text{somma delle energie di tutti gli stati nella cavità}\times\text{peso di ogni energia}}{\text{numero totale degli stati}\times\text{peso di ogni energia}}
+\end{equation}
+
+    Ricordando che: 1. \(E_n=nh\nu;\) energia dello stato 2.
+\(f(E_n)=e^{-\frac{E_n}{k_BT}};\) peso dello stano \(n\)-esimo
+
+    Otteniamo che:
+
+\begin{equation}\label{eq:energia media}
+<E>=\frac{\sum_{n}E_n\cdot f(E_n)}{\sum_{n} f(E_n)}=\frac{\sum_{n}E_n\cdot e^{-\frac{E_n}{k_BT}}}{\sum_{n} e^{-\frac{E_n}{k_BT}}}\\
+\end{equation}
+
+    \[
+\Downarrow
+\]
+
+\begin{equation}\label{eq:energia media1}
+    \frac{\sum_{n}nh\nu\cdot e^{-\frac{nh\nu}{k_BT}}}{\sum_{n} e^{-\frac{nh\nu}{k_BT}}}
+\end{equation}
+
+    \textbf{Dobbiamo quindi capire come fare questa somma infinita che va da
+\(n=0\) a \(n=\infty\). cioè il rapporto di due serie.}
+
+Innanzitutto facciamo una sotituzione per rendere il problema più
+leggibile
+
+\begin{equation}\label{eq:energia media_1}
+ x=\frac{h\nu}{kT}\\
+ \, \\
+ \Downarrow \\
+ \, \\
+ <E> = \frac{\sum_{n}nkTx\cdot e^{-nx}}{\sum_{n}  e^{-nx}}
+\end{equation}
+
+    Studiamo in modo separato il denominatore ed il numeratore
+
+\hypertarget{studiamo-il-denominatore}{%
+\paragraph{Studiamo il denominatore}\label{studiamo-il-denominatore}}
+
+Introduciamo la funzione
+
+\begin{equation}\label{eq:Z}
+Z(x) = \sum_{n=0}^\infty  e^{-nx}
+\end{equation}
+
+    come si può sosservare è un a serie geometrica
+
+\begin{equation}\label{eq:ser geom}
+1+e^{-x}+e^{-2x}+e^{-3x}+\dots +e^{-nx}+\dots
+\end{equation}
+
+    Con ragione \[
+q=e^{-x} \Rightarrow \text{ di somma } \ \sum_{n=0}^\infty q^n = \frac{1}{1-q}\\
+\]
+
+    \[
+\Downarrow\\
+Z(x) = \sum_{n=0}^\infty  e^{-nx} =\frac{1}{1-e^{-x}}
+\]
+
+    \hypertarget{studiamo-il-numeraore}{%
+\paragraph{Studiamo il numeraore}\label{studiamo-il-numeraore}}
+
+Il numeratore è \begin{equation}\label{eq:num_p}
+kT\sum_{n=0}^\infty n x e^{-nx}
+\end{equation}
+
+    Ritorniamo alla funzione \(Z(x)= \sum_{n=0}^\infty e^{-nx}\) e proviamo
+a ricavare la derivata.
+
+\begin{equation}\label{eq:der_Z}
+\frac{dZ(x)}{dx}= \frac{d}{dx}\sum_{n=0}^\infty  e^{-nx}
+\end{equation}
+
+    Abbiamo qui la derivata si una somma, e per quanto infinita, le regole
+di derivazione (visto che le funzioni sono continue e derivabili in
+tutto \(\mathbb{R}\)) valgono ancora, e quindi la derivata della somma è
+la somma delle derivate:
+
+\begin{equation}\label{eq:der_Z1}
+\frac{dZ(x)}{dx}=- \sum_{n=0}^\infty n e^{-nx}
+\end{equation}
+
+    L'osservazione da fare è che quindi il numeratore e la derivata di
+\(Z(x)\) sono uguali a meno di un fattore, cioè:
+
+\begin{equation}\label{eq:num_p1}
+\sum_{n=0}^\infty nx e^{-nx} = - x \frac{dZ(x)}{dx}
+\end{equation}
+
+    \hypertarget{lenergia-media-e-la-distribuzione-di-planck}{%
+\subsubsection{L'energia media e la distribuzione di
+Planck}\label{lenergia-media-e-la-distribuzione-di-planck}}
+
+Sosttiutiamo quindi i risultati ottenuti
+
+\[
+<E> = \frac{\sum_{n}nkTx\cdot e^{-nx}}{\sum_{n}  e^{-nx}} = \frac{-kTx  \frac{dZ(x)}{dx}}{Z(x)}
+\] Guardiamo bene il termine
+
+    \[
+\frac{\frac{dZ(x)}{dx}}{Z(x)} = \frac{1}{Z(x)}\frac{dZ(x)}{dx}
+\]
+
+    Dovreste accorgervi che se facciamo la derivata di \[
+\frac{d\ln{f(x)}}{dx} = \frac{1}{f(x)}\frac{df(x)}{dx}
+\]
+
+    E quindi \[
+ \frac{1}{Z(x)}\frac{dZ(x)}{dx} = \frac{d\ln{Z(x)}}{dx} 
+\]
+
+    Che sostituita nel calcolo dell'energia media da: \[
+ <E> = -kTx\frac{1}{Z(x)}\frac{dZ(x)}{dx}  = -kTx \frac{d\ln{Z(x)}}{dx}
+\]
+
+    \[
+\Downarrow\\
+\, \\
+ -kTx \frac{d\left (\ln{\left ( 1-e^{-x}\right )^{-1}}\right )}{dx} = -kTx \frac{d\left (-\ln{\left ( 1-e^{-x}\right )}\right )}{dx}
+\]
+
+    \[
+\Downarrow
+\\
+\, \\
+kTx \frac{d\left (\ln{\left ( 1-e^{-x}\right )}\right )}{dx} =  kTx \frac{e^{-x}}{ 1-e^{-x}} 
+\]
+
+    Infine operando l'ultima sotituzione otteniamo la \textbf{Legge di
+Planck} in funzione della frequenza della frequenza:
+
+\[
+<E> = h\nu \frac{e^{-\frac{h\nu}{kT}}}{1-e^{-\frac{h\nu}{kT}}} =  \frac{h\nu}{e^{\frac{h\nu}{kT}}-1};\quad\quad\quad \text{Legge di Planck}
+\] Si noti che \[
+\nu=c / \lambda \Rightarrow d \nu=-\left(c / \lambda^{2}\right) d \lambda \Rightarrow \frac{d \nu}{d \lambda}=-\frac{c}{\lambda^{2}}
+\]
+
+    \hypertarget{la-densituxe0-di-energia---distribuzione-di-planck}{%
+\subsubsection{la densità di energia - distribuzione di
+Planck}\label{la-densituxe0-di-energia---distribuzione-di-planck}}
+
+Per ottenere la densità energetica dobbiamo moltiplicare per la densità
+degli stati, euqivalente a quelli di Rayleghi-Jeans $dN =
+\frac{8\pi L^3\nu^2}{c^3}d\nu $ e dividere per il volume \(L^3\), \[
+u(\nu,T)= \frac{8\pi \nu^2}{c^3}  \frac{h\nu}{e^{\frac{h\nu}{kT}}-1}
+\] che è in ottimo accordo con i dati sperimentali.
+
+    Per ricavarer la densità in funzione della lunghezza d'onda si noti che
+
+\begin{equation}\label{eq:PLANCK}
+\nu=c / \lambda \Rightarrow d \nu=-\left(c / \lambda^{2}\right) d \lambda \Rightarrow \frac{d \nu}{d \lambda}=-\frac{c}{\lambda^{2}}
+\end{equation}
+
+quindi la formula di Planck eq. (20) per la distribuzione spettrale
+della radiazione espressa in lunghezza d'onda si scrive \[
+u_{T}(\lambda) d \lambda=\frac{8 \pi h c}{\lambda^{5}} \frac{d \lambda}{e^{k / \lambda k_{n} T}-1}
+\]
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{2}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{IFrame}\PY{p}{(}\PY{n}{src}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{https://phet.colorado.edu/sims/html/blackbody\PYZhy{}spectrum/latest/blackbody\PYZhy{}spectrum\PYZus{}en.html}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{width}\PY{o}{=}\PY{l+m+mi}{1000}\PY{p}{,} \PY{n}{height}\PY{o}{=}\PY{l+m+mi}{800}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{2}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+<IPython.lib.display.IFrame at 0x7fca49152650>
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \hypertarget{conseguenze-della-formula-di-planck}{%
+\subsection{Conseguenze della formula di
+Planck}\label{conseguenze-della-formula-di-planck}}
+
+Utilizando leq.(26) è possibile ricavare la legge di Wien, di Stefan e
+la legge di Rayleigh-Jeans come limite per \(\nu \rightarrow 0\)
+
+\hypertarget{la-legge-di-wien}{%
+\subsubsection{La legge di Wien}\label{la-legge-di-wien}}
+
+Imponendo che la derivata rispetto a $ \nu$ dell'eq. (26) si annulli
+si determina $\nu_{\max }$ e $\lambda_{\max }=c / \nu_{\max }$
+
+\[
+\begin{aligned}
+\frac{d \rho_{T}(\nu)}{d \nu}=0 & \Rightarrow\left(3 \nu^{2}-\nu^{3} \frac{h}{k_{B} T} e^{\omega_{W} / k_{B} T}\left(e^{k w / k_{B} T}-1\right)^{-1}\right)=0 \\
+& \Rightarrow 3\left(e^{\alpha}-1\right)-\alpha e^{\alpha}=0 \Rightarrow e^{\alpha}(1-\alpha / 3)=1
+\end{aligned}
+\]
+
+Per trovare la soluzione dell'eq.(24) occorre risolvere l'equazione
+trascendente \[
+e^{-\alpha}=(1-\alpha / 3) \Rightarrow \alpha \sim 2.8 \Rightarrow \lambda_{\max } T=0.29\, \mathrm{cm} K
+\]
+
+\begin{itemize}
+\tightlist
+\item
+  La soluzione dell'equazione si trova graficamente cercando il valore
+  di \(\alpha\) per il quale la retta \(1-\alpha / 3\) intercetta la
+  curva esponenziale \(e^{-\alpha} .\) II valore \(\alpha=0\) va
+  scartato perché corrisponde ad \(\nu=0\) (minimo della curva).
+\end{itemize}
+
+    
+
+    \hypertarget{la-legge-di-stefan}{%
+\subsubsection{La legge di Stefan}\label{la-legge-di-stefan}}
+
+Calcoliamo la radianza usando l'eq.( 26 ), ricordando che la radianza
+spettrale è proporzionale alla densità d'energia \[
+u_{T} \propto \int_{0}^{\infty} \rho_{T}(\nu) d \nu=\int_{0}^{\infty} \frac{8 \pi \nu^{2}}{c^{3}} \frac{h \nu}{e^{k \omega / k_{B} T}-1} d \nu
+\]
+
+Cambiando variabile
+\[\alpha=h \nu / k_{B} T \Rightarrow k_{B} T / h d \alpha=d \nu\]
+
+L'eq.(33) si scrive \[
+u_{T} \propto \frac{8 \pi h}{c^{3}}\left(\frac{k_{B} T}{h}\right)^{4} \int_{0}^{\infty} \frac{\alpha^{3} e^{-\alpha} d \alpha}{1-e^{-\alpha}}
+\]
+
+Leq.(33) mostra una proporzionalità tra la radianza e la quarta potenza
+della temperatura, in quanto lintegrale indefinito è un numero. Tale
+integrale si può esplicitamente calcolare mediante uno sviluppo in serie
+di potenze del denominatore dell'integrando (che non facciamo ma che da
+come risultato:
+
+\[
+\int_{0}^{\infty} \frac{\alpha^{3} e^{-\alpha} d \alpha}{1-e^{-\alpha}}= \frac{\pi^{4}}{15}\]
+
+Inserendo tale espressione l'integrale in \(\alpha\) dell'eq.(33)
+diventa \[
+u_{T}  \propto \frac{8 \pi h}{c^{3}}\left(\frac{k_{B} T}{h}\right)^{4}  \frac{\pi^{4}}{15}
+\]
+
+    \hypertarget{la-legge-di-rayleigh-jeans}{%
+\subsubsection{La legge di
+Rayleigh-Jeans}\label{la-legge-di-rayleigh-jeans}}
+
+Se \(h \nu<<k_{B} T\) possinmo sviluppare lesponenzinle che appare nel
+denominntore dell'eq.(26) e fermarci al primo ordine \[
+u_{T}(\nu)_{\nu \rightarrow 0} \sim k_{B} T \frac{8 \pi \nu^{2}}{c^{3}}
+\]
+
+che è la legge classica vedi di Rayleigh-Jeans. Si ricordi che
+
+\[
+e^{x}=\sum_{n=0}^{\infty} \frac{x^{n}}{n !}=1+x+x^{2} / 2+x^{3} / 6 \ldots
+\] Si noti che la disuguaglianza \(h \nu<<k_{B} T\) é verificata a basse
+frequenze e per ogni valore di \(\nu\) se \(h \rightarrow 0,\) limite
+classico.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+
+\end{Verbatim}
+\end{tcolorbox}
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+\end{document}

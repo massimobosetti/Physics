@@ -13387,28 +13387,37 @@ $$</p>
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="L'equilibrio-termodinamico-ed-energia-del-corpo-nero">L'equilibrio termodinamico ed energia del corpo nero<a class="anchor-link" href="#L'equilibrio-termodinamico-ed-energia-del-corpo-nero">&#182;</a></h3><p>All'equilibrio termodinamico vogliamo conoscere l'energia media $&lt;E&gt;$, quindi:</p>
 <p>L'energia media è data da:</p>
-$$
-&lt;E&gt; = \frac{\text{somma delle energie di tutti gli stati nella cavità}\cdot\text{peso di ogni energia}}{\text{numero totale degli stati}\cdot\text{peso di ogni energia}}
-$$<p>Ricordando che:</p>
+\begin{equation}\label{eq:ener_media}
+&lt;E&gt; = \frac{\text{somma delle energie di tutti gli stati nella cavità}\times\text{peso di ogni energia}}{\text{numero totale degli stati}\times\text{peso di ogni energia}}
+\end{equation}
+</div>
+</div>
+</div><div class="fragment">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Ricordando che:</p>
 <ol>
 <li>$E_n=nh\nu;$ energia dello stato</li>
 <li>$f(E_n)=e^{-\frac{E_n}{k_BT}};$ peso dello stano $n$-esimo</li>
 </ol>
+
+</div>
+</div>
+</div></div></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>Otteniamo che:
 \begin{equation}\label{eq:energia media}</p>
 <p><E>=\frac{\sum_{n}E_n\cdot f(E<em>n)}{\sum</em>{n} f(E<em>n)}=\frac{\sum</em>{n}E_n\cdot e^{-\frac{E_n}{k<em>BT}}}{\sum</em>{n} e^{-\frac{E_n}{k<em>BT}}}=\
     \frac{\sum</em>{n}nh\nu\cdot e^{-\frac{nh\nu}{k<em>BT}}}{\sum</em>{n} e^{-\frac{nh\nu}{k_BT}}}
 \end{equation}</p>
 <p>Dobbiamo quindi capire come fare questa somma infinita che va da $n=0$ a $n=\infty$. cioè il rapporto di due serie.</p>
-<p>innanzitutto facciamo una sotituzione per rendere il problema più leggibile
-   $$
-   x=\frac{h\nu}{kT}
-   $$</p>
-<p>Da ciò otteniamo
-\begin{equation}\label{eq:energia media_1}</p>
-<p><E>= \frac{\sum<em>{n}nkTx\cdot e^{-nx}}{\sum</em>{n}  e^{-nx}}
-\end{equation}</p>
-
+<p>innanzitutto facciamo una sotituzione per rendere il problema più leggibile</p>
+\begin{equation}\label{eq:energia media_1}
+ x=\frac{h\nu}{kT} \Rightarrow  &lt;E&gt; = \frac{\sum_{n}nkTx\cdot e^{-nx}}{\sum_{n}  e^{-nx}}
+\end{equation}
 </div>
 </div>
 </div></section><section>
@@ -13419,7 +13428,14 @@ $$<p>Ricordando che:</p>
 <h4 id="Studiamo-il--denominatore">Studiamo il  denominatore<a class="anchor-link" href="#Studiamo-il--denominatore">&#182;</a></h4><p>Introduciamo la funzione</p>
 \begin{equation}\label{eq:Z}
 Z(x) = \sum_{n=0}^\infty  e^{-nx}
-\end{equation}<p>come si può sosservare è un a serie geometrica</p>
+\end{equation}
+</div>
+</div>
+</div><div class="fragment">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>come si può sosservare è un a serie geometrica</p>
 \begin{equation}\label{eq:ser geom}
 1+e^{-x}+e^{-2x}+e^{-3x}+\dots +e^{-nx}+\dots
 \end{equation}<p>Con ragione
@@ -13431,7 +13447,7 @@ $$</p>
 
 </div>
 </div>
-</div></section><section>
+</div></div></section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -13439,19 +13455,40 @@ $$</p>
 \begin{equation}\label{eq:num_p}
 kT\sum_{n=0}^\infty n x e^{-nx}
 \end{equation}</p>
+
+</div>
+</div>
+</div><div class="fragment">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>Ritorniamo alla funzione $Z(x)$ e proviamo a ricavare la derivata.</p>
 \begin{equation}\label{eq:der_Z}
 \frac{dZ(x)}{dx}= \frac{d}{dx}\sum_{n=0}^\infty  e^{-nx}
-\end{equation}<p>Abbiamo qui la derivata si una somma, e per quanto infinita, le regole di derivazione (visto che le funzioni sono continue e derivabili in tutto $\mathbb{R}$) valgono ancora, e quindi la derivata della somma è la somma delle derivate:</p>
+\end{equation}
+</div>
+</div>
+</div></div><div class="fragment">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Abbiamo qui la derivata si una somma, e per quanto infinita, le regole di derivazione (visto che le funzioni sono continue e derivabili in tutto $\mathbb{R}$) valgono ancora, e quindi la derivata della somma è la somma delle derivate:</p>
 \begin{equation}\label{eq:der_Z1}
 \frac{dZ(x)}{dx}=- \sum_{n=0}^\infty n e^{-nx}
-\end{equation}<p>L'osservazione da fare è che quindi il numeratore e la derivata di $Z(x)$ sono uguali a meno di un fattore, cioè:</p>
+\end{equation}
+</div>
+</div>
+</div></div><div class="fragment">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>L'osservazione da fare è che quindi il numeratore e la derivata di $Z(x)$ sono uguali a meno di un fattore, cioè:</p>
 \begin{equation}\label{eq:num_p1}
 \sum_{n=0}^\infty nx e^{-nx} = - x \frac{dZ(x)}{dx}
 \end{equation}
 </div>
 </div>
-</div></section><section>
+</div></div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -13459,16 +13496,30 @@ kT\sum_{n=0}^\infty n x e^{-nx}
 $$
 &lt;E&gt; = \frac{\sum_{n}nkTx\cdot e^{-nx}}{\sum_{n}  e^{-nx}} = \frac{-kTx  \frac{dZ(x)}{dx}}{Z(x)}
 $$<p>Guardiamo bene il termine</p>
+
+</div>
+</div>
+</div><div class="fragment">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 $$
 \frac{\frac{dZ(x)}{dx}}{Z(x)} = \frac{1}{Z(x)}\frac{dZ(x)}{dx}
-$$<p>Dovreste accorgervi che se facciamo la derivata di
+$$
+</div>
+</div>
+</div></div><div class="fragment">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Dovreste accorgervi che se facciamo la derivata di
 $$
 \frac{d\ln{f(x)}}{dx} = \frac{1}{f(x)}\frac{df(x)}{dx}
 $$</p>
 
 </div>
 </div>
-</div></section><section>
+</div></div></section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -13476,6 +13527,13 @@ $$</p>
 $$
  \frac{1}{Z(x)}\frac{dZ(x)}{dx} = \frac{d\ln{Z(x)}}{dx} 
 $$</p>
+
+</div>
+</div>
+</div><div class="fragment">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>Che sostituita nel calcolo dell'energia media  ci da:</p>
 \begin{matrix}
     &lt;E&gt; &amp;= -kTx\frac{1}{Z(x)}\frac{dZ(x)}{dx}  =&amp; -kTx \frac{d\ln{Z(x)}}{dx} \\ 
@@ -13484,7 +13542,7 @@ $$</p>
 \end{matrix}
 </div>
 </div>
-</div></section><section>
+</div></div></section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -13498,7 +13556,7 @@ $$</p>
 
 </div>
 </div>
-</div><div class="fragment">
+</div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -13507,6 +13565,14 @@ $$
 u(\nu,T)= \frac{8\pi \nu^2}{c^3}  \frac{h\nu}{e^{\frac{h\nu}{kT}}-1}
 $$ 
 che è in ottimo accordo con i dati sperimentali.</p>
+<p><a title="Darth Kule / Public domain" href="https://commons.wikimedia.org/wiki/File:Black_body.svg"><img width="512" alt="Black body" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Black_body.svg/512px-Black_body.svg.png"></a></p>
+
+</div>
+</div>
+</div></section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>Si noti che</p>
 \begin{equation}\label{eq:PLANCK}
 \nu=c / \lambda \Rightarrow d \nu=-\left(c / \lambda^{2}\right) d \lambda \Rightarrow \frac{d \nu}{d \lambda}=-\frac{c}{\lambda^{2}}
@@ -13517,7 +13583,7 @@ $$</p>
 
 </div>
 </div>
-</div></div></section></section><section><section>
+</div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -13575,7 +13641,7 @@ $$</p>
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="La-legge-di-Rayleigh-Jeans">La legge di Rayleigh-Jeans<a class="anchor-link" href="#La-legge-di-Rayleigh-Jeans">&#182;</a></h3><p>Se $h \nu&lt;&lt;k_{B} T$ possinmo sviluppare lesponenzinle che appare nel denominntore dell'eq.(26) e fermarci al primo ordine
 $$
-\rho_{T}(\nu)_{\nu \rightarrow 0} \sim k_{B} T \frac{8 \pi \nu^{2}}{c^{3}}
+u_{T}(\nu)_{\nu \rightarrow 0} \sim k_{B} T \frac{8 \pi \nu^{2}}{c^{3}}
 $$</p>
 <p>che è la legge classica vedi di Rayleigh-Jeans. Si ricordi che</p>
 $$
@@ -13584,6 +13650,19 @@ $$<p>Si noti che la disuguaglianza $h \nu&lt;&lt;k_{B} T$ é verificata a basse 
 
 </div>
 </div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span> 
+</pre></div>
+
+    </div>
+</div>
+</div>
+
 </div></section></section>
 </div>
 </div>
